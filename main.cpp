@@ -1,31 +1,28 @@
-#include <iostream>
-#include <cstring>
-#include <ostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
 
+#include <fstream>
+#include <iostream>             // Basic C++ lib
+#include <bits/stdc++.h>        // For the ifstream on showBanner
+#include "./src/arguments.cpp"
+#include <string>
 
+using namespace std;            // For type string
+
+void showBanner(void) {
+    ifstream f("banner.txt"); // Read the file who have the banner
+    if (!f.is_open()) {
+        ;
+    }
+    string s; 
+
+    while (getline(f, s))
+        std::cout << "\x1b[38;5;93m" << s << "\x1b[00m" << endl;
+
+}
 
 int main(int argv, char *argc[]) {
-    int connectStatus;
-    sockaddr_in servAddr;
-    servAddr.sin_family = AF_INET;
-    servAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-
-    for (int i = 8000; i <= 9000; i++){
-        int sockFd = socket(AF_INET, SOCK_STREAM, 0);
-        unsigned short PORT = i;
-        servAddr.sin_port = htons(PORT);
-        if ((connectStatus = connect(sockFd, (struct sockaddr*)&servAddr, sizeof(servAddr))) < 0) {
-            ;
-        }
-        if (connectStatus == 0) {
-            std::cout << "[!] Port open on : " << PORT << std::endl;
-        }
-        close(sockFd);
-    }
-    return 0; // finaly work 
+    char *IP = NULL;
+    showBanner();
+    arguments(argv, argc, IP);
+    std::cout << "AUIYZGFEE : " << IP << std::endl;
+    return 0;
 }
