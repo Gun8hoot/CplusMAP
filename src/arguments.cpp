@@ -4,21 +4,20 @@
 #include <ostream>
 
 /* TODO : 
-*   - The IP is not print on the main function 
-*   
-*
-*/
+ *  - The IP is not print on the main function 
+ *
+ */
 
-void arguments(int argc, char *argv[], char (*IP)) {
+void arguments(int argc, char *argv[], char **IP) {
 
     for (int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-i") == 0 && (i + 1) < argc) {
-            IP = (char *)malloc(strlen(argv[i + 1]) + 1);
+            *IP = (char *)malloc(strlen(argv[i + 1]) + 1);
             if (IP == NULL) {
-                std::cerr << "Memory allocation failed" << std::endl;
+                std::cerr << "Memory allocation failed" << '\n';
                 exit(0);
             }
-            strcpy(IP, argv[i + 1]);
+            strcpy(*IP, argv[i + 1]);
             break; 
         }
     }
@@ -28,7 +27,7 @@ void arguments(int argc, char *argv[], char (*IP)) {
     } 
     
     else {
-        std::cout << "[!] You need to enter an IP address " << std::endl;
+        std::cout << "[!] You need to enter an IP address " << '\n';
         exit(0);
     }
 }
