@@ -2,24 +2,43 @@
 #include <iostream>
 #include <cstring>
 #include <ostream>
-
-/* TODO : 
- *  - The IP is not print on the main function 
- *
- */
+using namespace std;
 
 void arguments(int argc, char *argv[], char **IP) {
+    const char argumentAllow[4][12] = {"-i", "-I", "-h", "-H"};
+    argc = argc-1;
 
     for (int i = 0; i < argc; i++) {
-        if (strcmp(argv[i], "-i") == 0 && (i + 1) < argc) {
+        if ((strcmp(argv[i], argumentAllow[2]) == 0) || strcmp(argv[i], argumentAllow[3]) == 0) {
+            std::cout << "Help\n";
+            exit(0);
+        }
+
+        else if ((strcmp(argv[i], argumentAllow[0]) == 0) || (strcmp(argv[i], argumentAllow[1]) == 0) && (i + 1) < argc) {
             *IP = (char *)malloc(strlen(argv[i + 1]) + 1);
             if (IP == NULL) {
-                std::cerr << "Memory allocation failed" << '\n';
+                std::cerr << "[!] Memory allocation failed" << '\n';
                 exit(0);
             }
+            if (argc > 1) {
+                for (int x(0); x <= argc; x++){
+                    if (((strcmp(argv[x], argumentAllow[0])) == 0) || (strcmp(argv[x], argumentAllow[1]) == 0) && (i+1 >= argc)){
+                        std::cout << argv[x+1] << std::endl;
+                        break;
+                    }
+                    else {
+                        exit(0);
+                    }
+                }
+            }
             strcpy(*IP, argv[i + 1]);
-            break; 
         }
+
+        
+        else {
+            ;
+        }
+        
     }
 
     if (IP != NULL) {
