@@ -11,7 +11,7 @@
 
 using namespace std;
 
-// Can't scan port higher that 1017, need to allocate more memory
+// Can't scan port higher above 1017, need to allocate more memory
 
 int scan(char *IP) {
     unsigned short PORT = 0;
