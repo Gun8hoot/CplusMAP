@@ -8,6 +8,11 @@ void arguments(int argc, char *argv[], char **IP) {
     const char argumentAllow[4][12] = {"-i", "-I", "-h", "-H"};
     argc = argc-1;
 
+    if (argc <= 0) {
+        std::cout << "You need at least 1 arguments: ./main -i/-I {IP} -h/-H \n";
+        exit(1);
+    }
+
     for (int i = 0; i < argc; i++) {
         if ((strcmp(argv[i], argumentAllow[2]) == 0) || strcmp(argv[i], argumentAllow[3]) == 0) {
             std::cout << "Help\n";
@@ -25,9 +30,6 @@ void arguments(int argc, char *argv[], char **IP) {
                     if (((strcmp(argv[x], argumentAllow[0])) == 0) || (strcmp(argv[x], argumentAllow[1]) == 0) && (i+1 >= argc)){
                         std::cout << argv[x+1] << std::endl;
                         break;
-                    }
-                    else {
-                        exit(0);
                     }
                 }
             }
