@@ -3,7 +3,6 @@
 #include <cstring>
 
 // Network libs
-#include <iterator>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -15,23 +14,24 @@ using namespace std;
 
 int scan(char *IP) {
     unsigned short PORT = 0;
-    //int count;
     int *count = (int*)malloc(sizeof(int ));
     sockaddr_in servAddr;
     servAddr.sin_family = AF_INET;
+    
     servAddr.sin_addr.s_addr = inet_addr(IP);
-
+    
 
     for (int i = 0; i <= 65535; i++) {
+        count++;
         int sockFd = socket(AF_INET, SOCK_STREAM, 0);
         PORT = i;
-        int connectStatus;
+        int connectStatus = (unsigned long)malloc(sizeof(int));
+        std::cout << sizeof(connectStatus) << std::endl;
         servAddr.sin_port = htons(PORT);
-        if(i == 5000) {
-            std::cout << i << std::endl;
-        }
-        if ((connectStatus = connect(sockFd, (struct sockaddr*)&servAddr, sizeof(servAddr))) < 0) {
+        connectStatus = connect(sockFd, (struct sockaddr*)&servAddr, sizeof(servAddr));
+        if (connectStatus < 0) {
             ;
+            //std::cout << "port : " << i << " res eq to " << res << std::endl;
         }
 
         if (connectStatus == 0) {
@@ -46,6 +46,7 @@ int scan(char *IP) {
     }
 
     else {
+        std::cout << "Failed to scan every port, some open can miss";
         return -1;
     }
 }

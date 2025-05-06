@@ -26,8 +26,8 @@ int main(int argv, char *argc[]) {
     char *IP = NULL;
     int done {0};
     showBanner();
-    //arguments(argv, argc, &IP);
-    IP = argc[2];
+    arguments(argv, argc, &IP);
+    /*
     done = scan(IP);
     if (done == 1) {
         std::cout << "[+] Finish\n";
@@ -36,6 +36,6 @@ int main(int argv, char *argc[]) {
     else if (done != 0) {
         std::cerr << "[!] ERROR : The scanning fonction have not finish" << std::endl;
         exit(1);
-    }
+    }*/
     
 }
