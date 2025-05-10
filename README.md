@@ -1,9 +1,10 @@
 # CPlusMAP
 - Compile the file 
 ```sh
-g++ ./main.cpp -o main -std=c++20
+g++ -Wall ./main.cpp -o cplusmap.bin -std=c++20
 ```
+
 - Execute the compiled file 
 ```sh
-./main -i {IP_ADDRESS}
+./cplusmap.bin -i {IP_ADDRESS}
 ```

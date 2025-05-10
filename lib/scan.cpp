@@ -1,5 +1,5 @@
+#include "../lib/main.h"
 #include <cstdlib>
-#include <iostream>
 #include <cstring>
 
 // Network libs
@@ -12,13 +12,11 @@
 
 using namespace std;
 
-// Can't scan port higher above 1017, need to allocate more memory
-
-int scan(char *IP, int *nmbOpenPort) {
+int scan(char *IP, unsigned short *nmbOpenPort) {
     unsigned short maxPort = 65535;
-    int currentPort = 0;
+    int currentPort;
 
-    for (int currentPort; currentPort <= maxPort; currentPort++) {
+    for (currentPort = 0; currentPort < maxPort+1; currentPort++) {
         int sockFd = socket(AF_INET, SOCK_STREAM, 0);
         sockaddr_in server;
         server.sin_family = AF_INET;
@@ -28,7 +26,7 @@ int scan(char *IP, int *nmbOpenPort) {
         int connectionStatus = connect(sockFd, (struct sockaddr*)&server, sizeof(server));
 
         if (connectionStatus == 0) {
-            std::cout << "[!] Port open on : " << currentPort << "\x1b[00m" << std::endl;
+            std::cout << "\x1b[0;33m[!] Port open on : " << currentPort << "\x1b[00m" << std::endl;
             (*nmbOpenPort)++;
         }
 
@@ -38,8 +36,7 @@ int scan(char *IP, int *nmbOpenPort) {
         close(sockFd);
     }
 
-
-    if (currentPort == 0) {
+    if (currentPort == maxPort+1) {
         return 0;
     }
 

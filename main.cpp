@@ -1,16 +1,12 @@
-
-// lib
-#include <fstream>  
-#include <iostream>             // Basic C++ lib
-#include <bits/stdc++.h>        // For the ifstream on showBanner
-#include <string>
-
 #include "./lib/arguments.cpp"
 #include "./lib/scan.cpp"
+#include "./lib/banner.cpp"
+#include "./lib/main.h"
+#include <unistd.h>
+#include <ctime>
 
 
 using namespace std;            // For type string & std
-
 
 /*
     The project is finshed at 60/70%
@@ -20,69 +16,71 @@ HAVE FIXED:
  - SCAN AND DETECTED OPEN PORT (fuxking loop) // - Cant connect after 1017 connection (veryyy far of 65535)
  - FOLDER STRUCTURE
  - nmbOpenPort IS FIXED
+ - FIX THE munmap_chunk()
 
 
 NEED TO DO: 
  - POLISH THE CODE (HE IS UGLY ASFK)
- - MORE COLORS
  - OUTPUT TO A FILE ARGMUENT LIKE -o {file.txt}
- - TIMER
+ - TIMER (NEED TO BE MORE PRECISE 10⁻²)
  - SOME OPTIMIZATION TO GAIN SPEED
  - CODED THE FONCTION TO CHECK IF THE GIVEN IP IS AN IPV4 AND NOT A RANDOM BUCH OF INTEGER OR CHARACTER 
- - COLOR IS CURRENTLY NOT WORKING TOO, I WILL PROBABLY NEED TO FLUSH OLD CONTENT OR CHANGE THE COLOR SYSTEM TO DISPLAY ON THE TERM (NEED TO SWITCH FROM A FUNCTION TO AN OBJECT)
  - ERROR MESSAGE FONCTION 
- - TRY SWITCH TO TCP STEALTH TO ENHANCE STEALTH 
+ - TRY SWITCH TO TCP STEALTH FOR ENHANCE STEALTH
+ - SHOW WICH SERVICE IS GENERALLY ON THIS PORT https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+ - CREATE A MAKE FILE
+ - CORE DUMP WHEN ARRIVED TO free(IP);
+ - -T flag to slow the process (enhance stealth)
+ - ADD COMPATIBILITY TO WINDOWS USERS
 
 */
 
-void showBanner(void) {
-    std::string line; 
-
-    ifstream file("./src/banner.txt"); // Read the banner file
-    if (!file.is_open()) {
-        std::cout << "[&] NON-FATAL ERROR : FAILED TO OPEN THE BANNER FILE\n";
-    }
-
-    while (getline(file, line))
-        std::cout /*color("purple")*/ << line << /*color("reset")*/ std::endl;
-}
-
-
 int main(int argv, char *argc[]) {
-    // 4 BYTES MEMORY ALLOCATION FOR IP ADDRESS
+    // init 
+    int done = 0;
     char* IP = (char*)malloc(sizeof(unsigned long));
+    std::cout << "size : " << IP<< std::endl;
     if (IP == NULL) {
-        std::cout <<"[!] FAILED TO ALLOCATE MEMORY FOR THE IP" << std::endl;
+        std::cout <<"\x1b[0;31m" << "[!] FAILED TO ALLOCATE MEMORY FOR THE IP" << "\x1b[0m" << std::endl; 
         exit(1);
     }
     else {;}
 
     
-    int *nmbOpenPort = (int*)malloc(sizeof(unsigned short));
-    if (IP == NULL) {
-        std::cout << "[!] FAILED TO ALLOCATE MEMORY FOR THE COUNTER" << std::endl;
+    unsigned short *nmbOpenPort = (unsigned short*)malloc(sizeof(unsigned short));
+    if (nmbOpenPort == NULL) {
+        std::cout <<"\x1b[0;31m[!] FAILED TO ALLOCATE MEMORY FOR THE COUNTER\x1b[0m" << std::endl;
+        free(IP);
         exit(1);
     }
     else {;}
-
-    int done {0};
+    *nmbOpenPort = 0;
+    strcpy(IP, "");
+    
 
     showBanner();
     arguments(argv, argc, &IP); // 
+    std::time_t startTime = std::time(nullptr);
     done = scan(IP, nmbOpenPort);
+    std::time_t endTime = std::time(nullptr);
 
     if (done == 0) {
-        std::cout << "[+] Finish, found " << *nmbOpenPort << " port open." << std::endl;
-        return 0;
+        std::cout << "\x1b[0;32m[+] Finish, found " << *nmbOpenPort << " port open. ";
     }
 
     else if (done != 0) {
-        std::cout << "[!] ERROR : FAILED TO FINISH THE SCANNING FONCTION\n"; exit(1);
+        std::cout << "\x1b[0;31m[!] ERROR : FAILED TO FINISH THE SCANNING FONCTION\n\x1b[0m";
+        std::cout << "[?] DEBUG : FOUND " << *nmbOpenPort << "PORT ON OPEN ON THE IP : " << IP << std::endl; exit(1);
+        free(IP);
+        free(nmbOpenPort);
+        exit(1);
         //errorMessages("NOT_FINISH_ERROR");
     }
 
+    std::cout << "Have scan every port in " << endTime - startTime << "s\x1b[00m" << std::endl;
+    
     // MEMORY FREED
-    free(IP);
-    free(nmbOpenPort);
+    if (IP) free(IP);
+    if (nmbOpenPort) free(nmbOpenPort);
     return 0;
 }
