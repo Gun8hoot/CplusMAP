@@ -1,10 +1,10 @@
-
 int check_ip(char *IP) {
 	int dot;
 	int count;
 	
 	count = 0;
 	dot = 0;
+
 	while (IP[count] != '\0') {
 		if (IP[count] == '.')
 		{
@@ -13,11 +13,12 @@ int check_ip(char *IP) {
 		count++;
 	}
 	
-	if (dot == 3) {
+	if (dot == 3) 
+	{
 		return (0);
 	}
-	else {
-		
+	else 
+	{	
 		return (1);
 	}
 }

@@ -21,6 +21,7 @@
 - [ ] Code a "-T" to reduce speed 
 - [ ] Compatibility with windows
 - [ ] Error message function 
+- [ ] Check update
 
 <br>
 

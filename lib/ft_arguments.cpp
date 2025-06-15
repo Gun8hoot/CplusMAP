@@ -1,4 +1,4 @@
-#include "./arguments.hpp"
+#include "./ft_arguments.hpp"
 
 /*int isIP(char **IP){
     for (int character = 0; character <= std::strlen(*IP); character++){

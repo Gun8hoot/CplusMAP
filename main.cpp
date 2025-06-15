@@ -8,21 +8,18 @@ int main(int    argv, char  *argc[]) {
     int done;
     unsigned short *nmbOpenPort;
     int corrctIP;
-    //int speed;
 
     corrctIP = 0;
     done = 0;
     //speed = 0;     // To faster to slower
 
     char*   IP = (char*)malloc(sizeof(unsigned long) * 17);
-
     if (IP == NULL) {
         std::cout <<"\x1b[0;31m" << "[!] FAILED TO ALLOCATE MEMORY FOR THE IP" << "\x1b[0m" << std::endl; 
         return (1);
     }
 
     nmbOpenPort = (unsigned short*)malloc(sizeof(unsigned short) * 5);
-
     if (nmbOpenPort == NULL) {
         std::cout <<"\x1b[0;31m[!] FAILED TO ALLOCATE MEMORY FOR THE COUNTER\x1b[0m" << std::endl;
         free(IP);

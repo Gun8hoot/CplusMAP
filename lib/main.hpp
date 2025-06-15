@@ -3,9 +3,9 @@
 #include <chrono>
 #include <cstring>
 
-#include "./banner.hpp"
-#include "./arguments.hpp"
-#include "./scan.hpp"
+#include "./ft_banner.hpp"
+#include "./ft_arguments.hpp"
+#include "./ft_scan.hpp"
 
 void showBanner(void);
 void arguments(int argc, char *argv[], char **IP);
