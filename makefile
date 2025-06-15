@@ -1,14 +1,14 @@
 CXX = g++
-CXXFLAGS = -Wall -o cplusmap
+CXXFLAGS = -Wall -Werror -Wextra -O1 $(SRCS) -o 
 
-SRCS = main.cpp
+SRCS = main.cpp ./lib/arguments.cpp ./lib/scan.cpp ./lib/banner.cpp
 OBJS = $(SRCS:.cpp=.o)
-TARGET = myprogram
+PROJ = cplusmap.bin
 
-all: $(TARGET)
+all: $(PROJ)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(PROJ): 
+	$(CXX) $(CXXFLAGS) $(PROJ)
 
 clean:
 	rm -f $(OBJS) $(TARGET)

@@ -1,16 +1,4 @@
-#include "../lib/main.h"
-#include <cstdlib>
-#include <cstring>
-
-// Network libs
-#include <ostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-
-
-using namespace std;
+#include "./scan.hpp"
 
 int scan(char *IP, unsigned short *nmbOpenPort) {
     unsigned short maxPort = 65535;
