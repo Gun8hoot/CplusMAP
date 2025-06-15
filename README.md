@@ -14,7 +14,7 @@
 - [ ] Complete rewrite
 - [ ] Do an output system
 - [ ] Some optimization to gain speed
-- [ ] Code the IPv4 check function
+- [X] Code the IPv4 check function
 - [ ] Code a stealth TCP 
 - [ ] Show the service usually associates to the open port
 - [X] Create a make file

@@ -5,4 +5,3 @@
 
 using namespace std;
 
-void arguments(int argc, char *argv[], char **IP);

@@ -1,4 +1,5 @@
 #include "./lib/main.hpp"
+#include <cstdlib>
 
 using namespace std;            // For type string & std
 
@@ -6,7 +7,10 @@ int main(int    argv, char  *argc[]) {
     // INIT
     int done;
     unsigned short *nmbOpenPort;
+    int corrctIP;
+    //int speed;
 
+    corrctIP = 0;
     done = 0;
     //speed = 0;     // To faster to slower
 
@@ -31,6 +35,13 @@ int main(int    argv, char  *argc[]) {
     // CORE
     showBanner();
     arguments(argv, argc, &IP); // 
+    corrctIP = check_ip(IP);
+    if (corrctIP == 1) {
+        std::cout <<"\x1b[0;31m[!] YOU HAVE ENTER AN INCORRECT IP, ONLY IPv4 IP WILL WORK\x1b[0m" << std::endl;
+        free(nmbOpenPort);
+        free(IP);
+        return (1);
+    }
 
     std::chrono::time_point<std::chrono::system_clock> startTime = std::chrono::system_clock::now();
     done = scan(IP, nmbOpenPort);

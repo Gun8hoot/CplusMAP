@@ -11,4 +11,3 @@
 
 using namespace std;
 
-int scan(char *IP, unsigned short *nmbOpenPort);
